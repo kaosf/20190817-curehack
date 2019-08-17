@@ -42,6 +42,16 @@ ka
 <p><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png" alt="CC BY-NC-SA 4.0" /></a></p>
 <p>Copyright (C) 2019 ka</p>
 </div>
+<div id="このページとリポジトリ" class="slide section level1">
+<h1>このページとリポジトリ</h1>
+<p><a href="https://kaosf.github.io/20190817-curehack">https://kaosf.github.io/20190817-curehack</a></p>
+<p>Repository: <a href="https://github.com/kaosf/20190817-curehack">kaosf/20190817-curehack - GitHub</a></p>
+</div>
+<div id="section" class="slide section level1">
+<h1></h1>
+<p>このスライドは未調整状態です</p>
+<p>発表時のまま残っていたり誤字があったりします</p>
+</div>
 <div id="準同型暗号" class="slide section level1">
 <h1>準同型暗号</h1>
 <p>平文 <span class="math inline">\(m\)</span> を暗号化する操作を <span class="math inline">\(Enc(m)\)</span> とする</p>
@@ -62,7 +72,7 @@ ka
 <p>となる</p>
 <p>暗号化したものを掛け算すると平文を足し算して暗号化したものと等しい</p>
 </div>
-<div id="section" class="slide section level1">
+<div id="section-1" class="slide section level1">
 <h1></h1>
 <p>掛け算が出来るものは乗法準同型暗号</p>
 <p>足し算と掛け算が両方出来るものは2009年になってようやく発見された</p>
@@ -85,20 +95,20 @@ ka
 </ul>
 <p>という操作を考える</p>
 </div>
-<div id="section-1" class="slide section level1">
+<div id="section-2" class="slide section level1">
 <h1></h1>
 <p>もしも投票結果が <span class="math inline">\(214\)</span> になっていたなら…</p>
-<p><span class="math inline">\(214 = 1 * 2 + 10 * 1 + 100 * 4 + 0 * 2\)</span></p>
+<p><span class="math inline">\(214 = 0 * 2 + 1 * 2 + 10 * 1 + 100 * 4\)</span></p>
 <p>であるはずなので</p>
 <ul>
-<li>きのこの山: 2</li>
+<li>きのこの山: 4</li>
 <li>たけのこの里: 1</li>
-<li>アルフォート: 4</li>
-<li>棄権: 0</li>
+<li>アルフォート: 2</li>
+<li>棄権: 2</li>
 </ul>
 <p>であったはずである</p>
 </div>
-<div id="section-2" class="slide section level1">
+<div id="section-3" class="slide section level1">
 <h1></h1>
 <p>もし99人で投票する場合は</p>
 <ul>
@@ -119,13 +129,12 @@ ka
 <h1>プライバシーの問題</h1>
 <p>自分が何に投票したかは 0, 1, 10 or 100 で表現されるがこれを暗号化したい</p>
 <p>そして暗号化されたまま合算されて復号されるとうれしい</p>
-<p>そこで投票を <span class="math inline">\(v_i\)</span> とし</p>
 </div>
 <div id="プリキュア大投票縮小版を考える" class="slide section level1">
 <h1>プリキュア大投票(縮小版)を考える</h1>
 <p>デモ</p>
 </div>
-<div id="section-3" class="slide section level1">
+<div id="section-4" class="slide section level1">
 <h1></h1>
 <p>ふたりはプリキュアに投票→Splash☆Starに投票→ふたりはプリキュアに投票→Yesに投票</p>
 <p>5GoGoにするとなんかバグるので赦して(TODO: Fix)</p>
@@ -149,7 +158,7 @@ ka
 <p><span class="math inline">\(g\)</span> は <span class="math inline">\(n\)</span> と <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span> から計算出来る公開鍵や公開情報とだけ認識してくれればOK</p>
 <p>(もうちょっと言っておくと <span class="math inline">\(g\)</span> は巡回群の生成元 <em>generator</em> です)</p>
 </div>
-<div id="section-4" class="slide section level1">
+<div id="section-5" class="slide section level1">
 <h1></h1>
 <p>ただしこれでは同じ平文(投票先)からは常に同じ暗号文が生成されてしまう</p>
 <p>そこで</p>
@@ -164,7 +173,7 @@ ka
 <p>復号するための秘密鍵 <span class="math inline">\(\lambda\)</span> は以下の通り</p>
 <p><span class="math display">\[\lambda = lcm(p-1, q-1)\]</span></p>
 </div>
-<div id="section-5" class="slide section level1">
+<div id="section-6" class="slide section level1">
 <h1></h1>
 <p>以下のように復号する</p>
 <p><span class="math display">\[C^\lambda = 1 + \alpha \lambda mn \pmod{n^2}\]</span></p>
@@ -201,7 +210,7 @@ ka
 <p>参考: <a href="https://ja.wikipedia.org/wiki/%E3%82%BC%E3%83%AD%E7%9F%A5%E8%AD%98%E8%A8%BC%E6%98%8E">ゼロ知識証明</a></p>
 <p>今回は自分の票を明かすことは無く，しかし自分は有効な票を暗号化してあることを示したい</p>
 </div>
-<div id="section-6" class="slide section level1">
+<div id="section-7" class="slide section level1">
 <h1></h1>
 <p>このデモを作りたかった…なにもできなかった…</p>
 </div>
@@ -211,12 +220,11 @@ ka
 <p>そこから計算出来る <span class="math inline">\(a_k\)</span> を投票所の人に提出する(Commitment)</p>
 <p>投票所の人は <span class="math inline">\(e_s\)</span> をランダムに選んで返す(Challenge)</p>
 <p>投票者は <span class="math inline">\(e_s\)</span> を受けて，<span class="math inline">\(z_k\)</span> と <span class="math inline">\(e_k\)</span> を(Response)</p>
-<p>投票書の人は <span class="math inline">\(a_k\)</span>, <span class="math inline">\(z_k\)</span>, <span class="math inline">\(e_k\)</span> をゴニョゴニョ計算すると投票者が不正をしているかどうかが確率で分かる</p>
+<p>投票所の人は <span class="math inline">\(a_k\)</span>, <span class="math inline">\(z_k\)</span>, <span class="math inline">\(e_k\)</span> をゴニョゴニョ計算すると投票者が不正をしているかどうかが確率で分かる</p>
 <p>何度も繰り返すと不正をしている人は高確率であぶり出される</p>
 <p>参考:</p>
 <ul>
 <li><a href="http://security.hsr.ch/msevote/paillier">Paillier Cryptosystem</a></li>
-<li><a href="http://security.hsr.ch/msevote/vote-cgi/paillier.c">Source</a></li>
 </ul>
 </div>
 </body>

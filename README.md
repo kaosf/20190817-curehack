@@ -22,9 +22,9 @@ Copyright (C) 2019 ka
 
 # このページとリポジトリ
 
-[https://kaosf.github.io/20190817-curehac](https://kaosf.github.io/20190817-curehac)
+[https://kaosf.github.io/20190817-curehack](https://kaosf.github.io/20190817-curehack)
 
-Repository: [kaosf/20190817-curehac - GitHub](https://github.com/kaosf/20190817-curehac)
+Repository: [kaosf/20190817-curehack - GitHub](https://github.com/kaosf/20190817-curehack)
 
 #
 
