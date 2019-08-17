@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="ka" />
+  <meta name="date" content="2019-08-17" />
+  <title>電子投票の超々簡易デモもどき</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="https://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+  <script src="https://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">電子投票の超々簡易デモもどき</h1>
+  <p class="author">
+ka
+  </p>
+  <p class="date">2019-08-17</p>
+</div>
+<div id="author" class="slide section level1">
+<h1>Author</h1>
+<p>ka</p>
+<p><a href="https://gravatar.com/ka000"><img src="https://gravatar.com/avatar/884be098693425b409d25aaec5091de8?s=150" alt="Gravatar" /></a></p>
+<p>Website: <a href="https://www.kaosfield.net">kaosfield</a></p>
+<p>Twitter: <a href="https://twitter.com/ka_">ka</a></p>
+<p>GitHub: <a href="https://github.com/kaosf">kaosf</a></p>
+</div>
+<div id="license" class="slide section level1">
+<h1>License</h1>
+<p><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png" alt="CC BY-NC-SA 4.0" /></a></p>
+<p>Copyright (C) 2019 ka</p>
+</div>
+<div id="準同型暗号" class="slide section level1">
+<h1>準同型暗号</h1>
+<p>平文 <span class="math inline">\(m\)</span> を暗号化する操作を <span class="math inline">\(Enc(m)\)</span> とする</p>
+<p>暗号化ということは平文がノイズのように変わってしまう</p>
+<p>…がそのノイズのようなもの同士でも計算を行うと<br />
+平文で計算したものを暗号化したのと同じ結果になる性質</p>
+<p><span class="math display">\[Enc(m_1) \otimes Enc(m_2) = Enc(m_1 \star m_2)\]</span></p>
+</div>
+<div id="加法準同型暗号" class="slide section level1">
+<h1>加法準同型暗号</h1>
+<p><span class="math display">\[Enc(m_1) \oplus Enc(m_2) = Enc(m_1 + m_2)\]</span></p>
+<p>特に足し算が出来るものを加法準同型暗号という</p>
+<p>今回この中でも特に Paillier 暗号について扱う</p>
+<p>Paillierの読み方は「ペイエ」</p>
+<p>参考: <a href="https://ja.wikipedia.org/wiki/Paillier%E6%9A%97%E5%8F%B7">Paillier暗号</a></p>
+<p>Paillier暗号では</p>
+<p><span class="math display">\[Enc(m_1) * Enc(m_2) = Enc(m_1 + m_2)\]</span></p>
+<p>となる</p>
+<p>暗号化したものを掛け算すると平文を足し算して暗号化したものと等しい</p>
+</div>
+<div id="section" class="slide section level1">
+<h1></h1>
+<p>掛け算が出来るものは乗法準同型暗号</p>
+<p>足し算と掛け算が両方出来るものは2009年になってようやく発見された</p>
+<p>参考: <a href="https://www.slideshare.net/herumi/ss-59758244">暗号文のままで計算しよう - 準同型暗号入門 -</a></p>
+</div>
+<div id="加法準同型暗号の応用" class="slide section level1">
+<h1>加法準同型暗号の応用</h1>
+<p>匿名性を完全に維持して電子投票が可能になる</p>
+<p>「電子投票」と「インターネット投票」は別の話なので混同注意</p>
+</div>
+<div id="匿名性を考えない電子投票について考える" class="slide section level1">
+<h1>匿名性を考えない電子投票について考える</h1>
+<p>例えば <em>きのこの山</em>, <em>たけのこの里</em>, <em>アルフォート</em> のどれが買うかを9人で投票して決めるとする</p>
+<p>ここで</p>
+<ul>
+<li>きのこの山への投票は1を足す</li>
+<li>たけのこの里への投票は10を足す</li>
+<li>アルフォートへの投票は100を足す</li>
+<li>棄権は0を足す</li>
+</ul>
+<p>という操作を考える</p>
+</div>
+<div id="section-1" class="slide section level1">
+<h1></h1>
+<p>もしも投票結果が <span class="math inline">\(214\)</span> になっていたなら…</p>
+<p><span class="math inline">\(214 = 1 * 2 + 10 * 1 + 100 * 4 + 0 * 2\)</span></p>
+<p>であるはずなので</p>
+<ul>
+<li>きのこの山: 2</li>
+<li>たけのこの里: 1</li>
+<li>アルフォート: 4</li>
+<li>棄権: 0</li>
+</ul>
+<p>であったはずである</p>
+</div>
+<div id="section-2" class="slide section level1">
+<h1></h1>
+<p>もし99人で投票する場合は</p>
+<ul>
+<li>きのこの山への投票は1を足す</li>
+<li>たけのこの里への投票は100を足す</li>
+<li>アルフォートへの投票は10000を足す</li>
+<li>棄権は0を足す</li>
+</ul>
+<p>とすれば良い</p>
+<p>集計結果が</p>
+<ul>
+<li>9900 なら 99 人がたけのこの里</li>
+<li>990000 なら 99 人がアルフォート</li>
+<li>198 なら 1 人がたけのこの里で 98 人がきのこの山</li>
+</ul>
+</div>
+<div id="プライバシーの問題" class="slide section level1">
+<h1>プライバシーの問題</h1>
+<p>自分が何に投票したかは 0, 1, 10 or 100 で表現されるがこれを暗号化したい</p>
+<p>そして暗号化されたまま合算されて復号されるとうれしい</p>
+<p>そこで投票を <span class="math inline">\(v_i\)</span> とし</p>
+</div>
+<div id="プリキュア大投票縮小版を考える" class="slide section level1">
+<h1>プリキュア大投票(縮小版)を考える</h1>
+<p>デモ</p>
+</div>
+<div id="section-3" class="slide section level1">
+<h1></h1>
+<p>ふたりはプリキュアに投票→Splash☆Starに投票→ふたりはプリキュアに投票→Yesに投票</p>
+<p>5GoGoにするとなんかバグるので赦して(TODO: Fix)</p>
+<p>先程のお菓子の例と同様でそれぞれの作品への投票は</p>
+<ul>
+<li>初代: 1</li>
+<li>MaxHeart: 8</li>
+<li>Splash☆Star: 64</li>
+<li>Yes: 512</li>
+<li>5GoGo: 4096</li>
+</ul>
+<p>を加算する扱いとなっている</p>
+</div>
+<div id="実装" class="slide section level1">
+<h1>実装</h1>
+<h2 id="暗号化">暗号化</h2>
+<p>平文と暗号文を <span class="math inline">\(m\)</span>, <span class="math inline">\(C\)</span> とする</p>
+<p>2つの異なる素数の積が <span class="math inline">\(n\)</span> でありそれを公開鍵をする</p>
+<p><span class="math display">\[g = (1 + \alpha n) * \beta^n\]</span> <span class="math display">\[C = g^m \pmod{n^2}\]</span></p>
+<p><span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span> は準同型の性質を崩さないように調整できる定数</p>
+<p><span class="math inline">\(g\)</span> は <span class="math inline">\(n\)</span> と <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span> から計算出来る公開鍵や公開情報とだけ認識してくれればOK</p>
+<p>(もうちょっと言っておくと <span class="math inline">\(g\)</span> は巡回群の生成元 <em>generator</em> です)</p>
+</div>
+<div id="section-4" class="slide section level1">
+<h1></h1>
+<p>ただしこれでは同じ平文(投票先)からは常に同じ暗号文が生成されてしまう</p>
+<p>そこで</p>
+<p><span class="math display">\[C = g^m * r^n \pmod{n^2}\]</span></p>
+<p>とする</p>
+<p>ここで <span class="math inline">\(r\)</span> は <span class="math inline">\(n\)</span> と互いに素となる整数値から選ばれる乱数である</p>
+<p>乱数を使って暗号化しても一意に復号が出来る(カーマイケルの定理より)</p>
+</div>
+<div id="実装-1" class="slide section level1">
+<h1>実装</h1>
+<h2 id="復号">復号</h2>
+<p>復号するための秘密鍵 <span class="math inline">\(\lambda\)</span> は以下の通り</p>
+<p><span class="math display">\[\lambda = lcm(p-1, q-1)\]</span></p>
+</div>
+<div id="section-5" class="slide section level1">
+<h1></h1>
+<p>以下のように復号する</p>
+<p><span class="math display">\[C^\lambda = 1 + \alpha \lambda mn \pmod{n^2}\]</span></p>
+<p><span class="math display">\[g^\lambda = 1 + \alpha \lambda n \pmod{n^2}\]</span></p>
+<p>(↑これは二項定理を展開してみると証明出来ます)</p>
+<p><span class="math display">\[L(x) = \frac{x - 1 \mod{n}}{n}\]</span></p>
+<p><span class="math display">\[\frac{L(C^\lambda)}{L(g^\lambda)} = \frac{\alpha\lambda mn}{\alpha\lambda n} = m\]</span></p>
+<p>ただしこれはモジュロ演算の割り算なのでモジュラ逆数を見つけて掛け算する操作になるので注意</p>
+<p><span class="math display">\[L(C^\lambda) * (L(g^\lambda))^{-1} = m\]</span></p>
+</div>
+<div id="加法準同型性の確認これが言いたいだけ" class="slide section level1">
+<h1>加法準同型性の確認(これが言いたいだけ)</h1>
+<p><span class="math display">\[C_1 = g^{m_1} * r_1^n \pmod{n^2}\]</span> <span class="math display">\[C_2 = g^{m_2} * r_2^n \pmod{n^2}\]</span></p>
+<p><span class="math display">\[C_1 * C_2 = g^{m_1 + m_2} * (r_1 r_2)^n \pmod{n^2}\]</span></p>
+<p>これを復号すると</p>
+<p><span class="math display">\[m_1 + m_2\]</span></p>
+<p>が得られることになる</p>
+</div>
+<div id="問題点" class="slide section level1">
+<h1>問題点</h1>
+<ul>
+<li>有効票以外の値の投票を判別出来ない(暗号化されているので)</li>
+<li>二重投票は防げない(これは別次元の問題になるので今は考えない)</li>
+<li>秘密鍵保持者と集計者が結託するとダメ(これはどうにかする方法あるんだろうかよく分からない)</li>
+</ul>
+</div>
+<div id="有効票以外の値の投票を弾きたい" class="slide section level1">
+<h1>有効票以外の値の投票を弾きたい</h1>
+<p>この話をする</p>
+</div>
+<div id="ゼロ知識証明" class="slide section level1">
+<h1>ゼロ知識証明</h1>
+<p>相手に情報を与えずに(※相手が得る知識はゼロ)自分が持っている情報が正しいことを証明する方法</p>
+<p>参考: <a href="https://ja.wikipedia.org/wiki/%E3%82%BC%E3%83%AD%E7%9F%A5%E8%AD%98%E8%A8%BC%E6%98%8E">ゼロ知識証明</a></p>
+<p>今回は自分の票を明かすことは無く，しかし自分は有効な票を暗号化してあることを示したい</p>
+</div>
+<div id="section-6" class="slide section level1">
+<h1></h1>
+<p>このデモを作りたかった…なにもできなかった…</p>
+</div>
+<div id="ざっくり紹介" class="slide section level1">
+<h1>ざっくり紹介</h1>
+<p>まず投票者が4つの乱数 <span class="math inline">\(z_k\)</span> と <span class="math inline">\(e_k\)</span> を決める(この時点では隠しておく)</p>
+<p>そこから計算出来る <span class="math inline">\(a_k\)</span> を投票所の人に提出する(Commitment)</p>
+<p>投票所の人は <span class="math inline">\(e_s\)</span> をランダムに選んで返す(Challenge)</p>
+<p>投票者は <span class="math inline">\(e_s\)</span> を受けて，<span class="math inline">\(z_k\)</span> と <span class="math inline">\(e_k\)</span> を(Response)</p>
+<p>投票書の人は <span class="math inline">\(a_k\)</span>, <span class="math inline">\(z_k\)</span>, <span class="math inline">\(e_k\)</span> をゴニョゴニョ計算すると投票者が不正をしているかどうかが確率で分かる</p>
+<p>何度も繰り返すと不正をしている人は高確率であぶり出される</p>
+<p>参考:</p>
+<ul>
+<li><a href="http://security.hsr.ch/msevote/paillier">Paillier Cryptosystem</a></li>
+<li><a href="http://security.hsr.ch/msevote/vote-cgi/paillier.c">Source</a></li>
+</ul>
+</div>
+</body>
+</html>
+<!-- Pandoc version:
+pandoc 2.7.3
+Compiled with pandoc-types 1.17.5.4, texmath 0.11.2.2, skylighting 0.8.2
+Default user data directory: <DELETED>
+Copyright (C) 2006-2019 John MacFarlane
+Web:  http://pandoc.org
+This is free software; see the source for copying conditions.
+There is no warranty, not even for merchantability or fitness
+for a particular purpose.
+-->
