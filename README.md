@@ -200,7 +200,7 @@ $$g^\lambda = 1 + \alpha \lambda n \pmod{n^2}$$
 
 $$L(x) = \frac{x - 1 \mod{n}}{n}$$
 
-$$\frac{L(C^\lambda)}{L(g^\lambda)} = \frac{\alpha\lambda mn}{\alpha\lambda n} = m$$
+$$\frac{L(C^\lambda)}{L(g^\lambda)} = \frac{\alpha\lambda m}{\alpha\lambda} = m$$
 
 ただしこれはモジュロ演算の割り算なのでモジュラ逆数を見つけて掛け算する操作になるので注意
 
